@@ -116,6 +116,8 @@ public class Main {
             return PAIR;
         } else if (isDoublePairs(pokersMap)) {
             return DOUBLE_PAIR;
+        } else if (isThreeOfAKind(pokersMap)) {
+            return THREE_OF_A_KIND;
         }
         return SINGLE;
     }
@@ -139,5 +141,9 @@ public class Main {
 
     private boolean isDoublePairs(Map<Integer, Integer> pokersMap) {
         return pokersMap.values().stream().filter(value -> value == 2).collect(toList()).size() == 2;
+    }
+
+    private boolean isThreeOfAKind(Map<Integer, Integer> pokersMap) {
+        return pokersMap.values().stream().filter(value -> value == 3).collect(toList()).size() > 0;
     }
 }
