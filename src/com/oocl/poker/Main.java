@@ -33,6 +33,7 @@ public class Main {
                 case STRAIGHT:
                     result = buildResult(compareStraight(player1, player2));
                     break;
+                case FLUSH:
                 default:
                     result = buildResult(compareSingle(player1, player2));
             }
