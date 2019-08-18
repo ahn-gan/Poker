@@ -22,9 +22,28 @@ public class Main {
         List<Poker> pokers = new ArrayList<>();
         if (!givenPokers.isEmpty()) {
             givenPokers.forEach(givenPoker -> {
-                pokers.add(new Poker(Integer.valueOf(givenPoker.substring(0, 1)), givenPoker.charAt(1)));
+                givenPoker = parsePokerValueWhenHasTJQKA(givenPoker);
+                pokers.add(new Poker(Integer.valueOf(givenPoker.substring(0, givenPoker.length() - 1)), givenPoker.substring(givenPoker.length() - 1).charAt(0)));
             });
         }
         return pokers;
+    }
+
+    private String parsePokerValueWhenHasTJQKA(String givenPoker) {
+        String valueString = givenPoker.substring(0, 1);
+        switch (valueString) {
+            case "T":
+                return givenPoker.replace(valueString, "10");
+            case "J":
+                return givenPoker.replace(valueString, "11");
+            case "Q":
+                return givenPoker.replace(valueString, "12");
+            case "K":
+                return givenPoker.replace(valueString, "13");
+            case "A":
+                return givenPoker.replace(valueString, "14");
+            default:
+                return givenPoker;
+        }
     }
 }
