@@ -10,16 +10,22 @@ public class Main {
     public String playingPokers(List<String> givenPokers) {
         String result = "";
         List<Poker> pokers = parsePokers(givenPokers);
+
         List<Poker> player1 = sortPokers(pokers.subList(0, pokers.size() / 2));
-        int pokerType1 = getPokersType(player1);
+        Map<Integer, Integer> pokersMap1 = getPokersMap(player1);
+        int pokerType1 = getPokersType(pokersMap1);
+
         List<Poker> player2 = sortPokers(pokers.subList(pokers.size() / 2, pokers.size()));
-        int pokerType2 = getPokersType(player2);
+        Map<Integer, Integer> pokersMap2 = getPokersMap(player2);
+        int pokerType2 = getPokersType(pokersMap2);
+
         if (pokerType1 > pokerType2) {
             result = buildResult(PLAYER1_WIN);
-        } else if (pokerType1 == pokerType2){
+        } else if (pokerType1 == pokerType2) {
             switch (pokerType1) {
                 case PAIR:
-                    result = buildResult(comparePair(player1, player2));
+                case DOUBLE_PAIR:
+                    result = buildResult(comparePair(pokersMap1, pokersMap2));
                     break;
                 default:
                     result = buildResult(compareSingle(player1, player2));
@@ -30,28 +36,40 @@ public class Main {
         return result;
     }
 
-    private int comparePair(List<Poker> player1, List<Poker> player2) {
-        if (player1.get(0).getValue() > player2.get(0).getValue())
+    private int comparePair(Map<Integer, Integer> player1, Map<Integer, Integer> player2) {
+        List<Integer> player1PairsKeys = getPairsKeyFromMap(player1, 2);
+        List<Integer> player2PairsKeys = getPairsKeyFromMap(player2, 2);
+        return compareList(player1PairsKeys, player2PairsKeys);
+    }
+
+    private int compareList(List<Integer> list1, List<Integer> list2) {
+        Integer maxKey1 = list1.get(list1.size() - 1);
+        Integer maxKey2 = list2.get(list2.size() - 1);
+        if (maxKey1 > maxKey2) {
             return -1;
-        else if (player1.get(0).getValue().equals(player2.get(0).getValue()))
-            return 0;
-        else
+        } else if (maxKey1.equals(maxKey2)) {
+            if (list1.size() == 1)
+                return 0;
+            else
+                return compareList(list1.subList(0, list1.size() - 1), list2.subList(0, list2.size() - 1));
+        } else
             return 1;
     }
 
-    private int compareSingle(List<Poker> player1, List<Poker> player2) {
-        Integer maxPokerValue1 = player1.get(player1.size() - 1).getValue();
-        Integer maxPokerValue2 = player2.get(player1.size() - 1).getValue();
-        if (maxPokerValue1 > maxPokerValue2) {
-            return -1;
-        } else if (maxPokerValue1.equals(maxPokerValue2)) {
-            if (player1.size() == 1 && player2.size() == 1)
-                return 0;
-            else
-                return compareSingle(player1.subList(0, player1.size() - 1), player2.subList(0, player2.size() - 1));
-        } else {
-            return 1;
+    private List<Integer> getPairsKeyFromMap(Map<Integer, Integer> map, Integer value) {
+        List<Integer> keyList = new ArrayList<>();
+        for (Map.Entry<Integer, Integer> entry : map.entrySet()) {
+            if (entry.getValue().equals(value)) {
+                keyList.add(entry.getKey());
+            }
         }
+        return keyList.stream().sorted().collect(toList());
+    }
+
+    private int compareSingle(List<Poker> player1, List<Poker> player2) {
+        List<Integer> pokerKey1 = player1.stream().map(Poker::getValue).collect(toList());
+        List<Integer> pokerKey2 = player2.stream().map(Poker::getValue).collect(toList());
+        return compareList(pokerKey1, pokerKey2);
     }
 
     private List<Poker> parsePokers(List<String> givenPokers) {
@@ -87,8 +105,7 @@ public class Main {
         return pokers.stream().sorted(Comparator.comparingInt(Poker::getValue)).collect(toList());
     }
 
-    private int getPokersType(List<Poker> pokes) {
-        Map<Integer, Integer> pokersMap = getPokersMap(pokes);
+    private int getPokersType(Map<Integer, Integer> pokersMap) {
         if (isOnePair(pokersMap)) {
             return PAIR;
         } else if (isDoublePairs(pokersMap)) {
