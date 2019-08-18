@@ -98,4 +98,14 @@ public class MainTest {
         // then
         Assert.assertEquals("player1 win", result);
     }
+
+    @Test
+    public void should_return_player2_win_when_all_have_3_of_a_kind_but_player2_has_bigger_one() {
+        // given
+        List<String> pokers = Arrays.asList("4H", "4D", "4S", "8C", "JD", "TC", "TS", "TD", "3H", "5C");
+        // when
+        String result = new Main().playingPokers(pokers);
+        // then
+        Assert.assertEquals("player2 win", result);
+    }
 }

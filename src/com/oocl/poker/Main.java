@@ -27,6 +27,9 @@ public class Main {
                 case DOUBLE_PAIR:
                     result = buildResult(comparePair(pokersMap1, pokersMap2));
                     break;
+                case THREE_OF_A_KIND:
+                    result = buildResult(compareThree(pokersMap1, pokersMap2));
+                    break;
                 default:
                     result = buildResult(compareSingle(player1, player2));
             }
@@ -46,6 +49,12 @@ public class Main {
             return compareList(player1SingleKeys, player2SingleKeys);
         } else
             return pairsCompareResult;
+    }
+
+    private int compareThree(Map<Integer, Integer> pokersMap1, Map<Integer, Integer> pokersMap2) {
+        List<Integer> player1PairsKeys = getPairsKeyFromMap(pokersMap1, 3);
+        List<Integer> player2PairsKeys = getPairsKeyFromMap(pokersMap2, 3);
+        return compareList(player1PairsKeys, player2PairsKeys);
     }
 
     private int compareList(List<Integer> list1, List<Integer> list2) {
