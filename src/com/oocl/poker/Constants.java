@@ -13,6 +13,8 @@ public class Constants {
 
     public static final int STRAIGHT = 5;
 
+    public static final int FLUSH = 6;
+
     // result type
     public static final int PLAYER1_WIN = -1;
 

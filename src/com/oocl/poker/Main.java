@@ -1,7 +1,6 @@
 package com.oocl.poker;
 
 import java.util.*;
-import java.util.stream.Collectors;
 
 import static com.oocl.poker.Constants.*;
 import static java.util.stream.Collectors.toList;
@@ -14,11 +13,11 @@ public class Main {
 
         List<Poker> player1 = sortPokers(pokers.subList(0, pokers.size() / 2));
         Map<Integer, Integer> pokersMap1 = getPokersMap(player1);
-        int pokerType1 = getPokersType(pokersMap1);
+        int pokerType1 = getPokersType(pokersMap1, player1);
 
         List<Poker> player2 = sortPokers(pokers.subList(pokers.size() / 2, pokers.size()));
         Map<Integer, Integer> pokersMap2 = getPokersMap(player2);
-        int pokerType2 = getPokersType(pokersMap2);
+        int pokerType2 = getPokersType(pokersMap2, player2);
 
         if (pokerType1 > pokerType2) {
             result = buildResult(PLAYER1_WIN);
@@ -128,7 +127,7 @@ public class Main {
         return pokers.stream().sorted(Comparator.comparingInt(Poker::getValue)).collect(toList());
     }
 
-    private int getPokersType(Map<Integer, Integer> pokersMap) {
+    private int getPokersType(Map<Integer, Integer> pokersMap, List<Poker> originPokers) {
         if (isOnePair(pokersMap)) {
             return PAIR;
         } else if (isDoublePairs(pokersMap)) {
@@ -137,8 +136,10 @@ public class Main {
             return THREE_OF_A_KIND;
         } else if (isStraight(pokersMap.entrySet().stream().map(v -> v.getKey()).collect(toList()))) {
             return STRAIGHT;
+        } else if (isFlush(originPokers.stream().map(Poker::getCategory).collect(toList()))) {
+            return FLUSH;
         }
-        return SINGLE;
+            return SINGLE;
     }
 
     private Map<Integer, Integer> getPokersMap(List<Poker> pokes) {
@@ -166,20 +167,27 @@ public class Main {
         return pokersMap.values().stream().filter(value -> value == 3).collect(toList()).size() > 0;
     }
 
-
     private boolean isStraight(List<Integer> keyList) {
         Integer preKey = null;
-        for(int i = 0; i < keyList.size(); i++) {
+        for (int i = 0; i < keyList.size(); i++) {
             if (i == 0) {
                 preKey = keyList.get(i);
             } else {
                 if (keyList.get(i) == preKey + 1) {
                     preKey = keyList.get(i);
-                }
-                else
+                } else
                     return false;
             }
         }
         return true;
+    }
+
+    private boolean isFlush(List<Character> categoryList) {
+        Map<Character, Integer> categoryMap = new HashMap<>();
+        categoryList.forEach(v -> {
+            Integer count = categoryMap.containsKey(v) ? categoryMap.get(v) + 1 : 1;
+            categoryMap.put(v, count);
+        });
+        return categoryMap.keySet().size() == 1;
     }
 }
