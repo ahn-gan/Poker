@@ -1,20 +1,18 @@
 package com.oocl.poker;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 import static com.oocl.poker.Constants.*;
+import static java.util.stream.Collectors.toList;
 
 public class Main {
 
     public String playingPokers(List<String> givenPokers) {
         String result = "";
         List<Poker> pokers = parsePokers(givenPokers);
-        List<Poker> player1 = pokers.subList(0, pokers.size() / 2);
+        List<Poker> player1 = sortPokers(pokers.subList(0, pokers.size() / 2));
         int pokerType1 = getPokersType(player1);
-        List<Poker> player2 = pokers.subList(pokers.size() / 2, pokers.size());
+        List<Poker> player2 = sortPokers(pokers.subList(pokers.size() / 2, pokers.size()));
         int pokerType2 = getPokersType(player2);
         if (pokerType1 == PAIR && pokerType2 == SINGLE) {
             result = buildResult(PLAYER1_WIN);
@@ -22,12 +20,12 @@ public class Main {
             result = buildResult(PLAYER2_WIN);
         } else {
             // both single
-            if (player1.get(0).getValue() < player2.get(0).getValue()) {
-                result = "player2 win";
-            } else if (player1.get(0).getValue().equals(player2.get(0).getValue())) {
-                result = "peace";
+            if (player1.get(player1.size() - 1).getValue() < player2.get(player1.size() - 1).getValue()) {
+                result = buildResult(PLAYER2_WIN);
+            } else if (player1.get(player1.size() - 1).getValue().equals(player2.get(player1.size() - 1).getValue())) {
+                result = buildResult(PEACE);
             } else {
-                result = "player1 win";
+                result = buildResult(PLAYER1_WIN);
             }
         }
         return result;
@@ -62,6 +60,9 @@ public class Main {
         }
     }
 
+    private List<Poker> sortPokers(List<Poker> pokers) {
+        return pokers.stream().sorted(Comparator.comparingInt(Poker::getValue)).collect(toList());
+    }
 
     private int getPokersType(List<Poker> pokes) {
         Map<Integer, Integer> pokersMap = getPokersMap(pokes);
