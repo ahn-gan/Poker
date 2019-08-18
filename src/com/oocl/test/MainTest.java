@@ -118,4 +118,14 @@ public class MainTest {
         // then
         Assert.assertEquals("player2 win", result);
     }
+
+    @Test
+    public void should_return_player1_win_when_both_have_straight_type_but_player1_has_bigger_one() {
+        // given
+        List<String> pokers = Arrays.asList("8C", "9D", "TS", "JC", "QD", "5C", "6S", "7D", "8H", "9C");
+        // when
+        String result = new Main().playingPokers(pokers);
+        // then
+        Assert.assertEquals("player1 win", result);
+    }
 }

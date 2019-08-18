@@ -31,6 +31,9 @@ public class Main {
                 case THREE_OF_A_KIND:
                     result = buildResult(compareThree(pokersMap1, pokersMap2));
                     break;
+                case STRAIGHT:
+                    result = buildResult(compareStraight(player1, player2));
+                    break;
                 default:
                     result = buildResult(compareSingle(player1, player2));
             }
@@ -56,6 +59,10 @@ public class Main {
         List<Integer> player1PairsKeys = getPairsKeyFromMap(pokersMap1, 3);
         List<Integer> player2PairsKeys = getPairsKeyFromMap(pokersMap2, 3);
         return compareList(player1PairsKeys, player2PairsKeys);
+    }
+
+    private int compareStraight(List<Poker> player1, List<Poker> player2) {
+        return player1.get(0).getValue() > player2.get(0).getValue() ? -1 : (player1.get(0).getValue().equals(player2.get(0).getValue()) ? 0 : 1);
     }
 
     private int compareList(List<Integer> list1, List<Integer> list2) {
