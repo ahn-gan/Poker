@@ -23,3 +23,14 @@ output
     player1 win
 
 ```
+
+### 3.
+```
+input
+    player1: ["4H", "4D"]
+    player2: ["TD", "AS"]
+
+output
+    player1 win
+
+```
