@@ -39,7 +39,13 @@ public class Main {
     private int comparePair(Map<Integer, Integer> player1, Map<Integer, Integer> player2) {
         List<Integer> player1PairsKeys = getPairsKeyFromMap(player1, 2);
         List<Integer> player2PairsKeys = getPairsKeyFromMap(player2, 2);
-        return compareList(player1PairsKeys, player2PairsKeys);
+        int pairsCompareResult = compareList(player1PairsKeys, player2PairsKeys);
+        if (pairsCompareResult == 0 && player1.values().contains(1)) {
+            List<Integer> player1SingleKeys = getPairsKeyFromMap(player1, 1);
+            List<Integer> player2SingleKeys = getPairsKeyFromMap(player2, 1);
+            return compareList(player1SingleKeys, player2SingleKeys);
+        } else
+            return pairsCompareResult;
     }
 
     private int compareList(List<Integer> list1, List<Integer> list2) {

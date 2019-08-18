@@ -66,3 +66,23 @@ input
 output
     player1 win
 ```
+
+### 7.
+```
+input
+    player1: ["4H", "4D", "8S", "8C", "JD"]
+    player2: ["4C", "4S", "TC", "TH", "2C"]
+
+output
+    player2 win
+```
+
+### 8.
+```
+input
+    player1: ["4H", "4D", "8S", "8C", "JD"]
+    player2: ["4C", "4S", "8D", "8H", "9C"]
+
+output
+    player1 win
+```

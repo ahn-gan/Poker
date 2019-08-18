@@ -79,4 +79,14 @@ public class MainTest {
         Assert.assertEquals("player2 win", result);
     }
 
+    @Test
+    public void should_return_player1_win_when_all_have_2_equals_pairs_but_player1_has_bigger_single_one() {
+        // given
+        List<String> pokers = Arrays.asList("4H", "4D", "8S", "8C", "JD", "4C", "4S", "8D", "8H", "9C");
+        // when
+        String result = new Main().playingPokers(pokers);
+        // then
+        Assert.assertEquals("player1 win", result);
+    }
+
 }
