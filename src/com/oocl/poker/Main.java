@@ -18,6 +18,8 @@ public class Main {
             result = buildResult(PLAYER1_WIN);
         } else if (pokerType1 == SINGLE && pokerType2 == PAIR) {
             result = buildResult(PLAYER2_WIN);
+        } else if (pokerType1 == PAIR && pokerType2 == PAIR) {
+            result = buildResult(comparePair(player1, player2));
         } else {
             // both single
             if (player1.get(player1.size() - 1).getValue() < player2.get(player1.size() - 1).getValue()) {
@@ -29,6 +31,15 @@ public class Main {
             }
         }
         return result;
+    }
+
+    private int comparePair(List<Poker> player1, List<Poker> player2) {
+        if (player1.get(0).getValue() < player2.get(0).getValue())
+            return -1;
+        else if (player1.get(0).getValue().equals(player2.get(0).getValue()))
+            return 0;
+        else
+            return 1;
     }
 
     private List<Poker> parsePokers(List<String> givenPokers) {

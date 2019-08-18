@@ -34,3 +34,25 @@ output
     player1 win
 
 ```
+
+### 4.
+```
+input
+    player1: ["TH", "8D"]
+    player2: ["AD", "2S"]
+
+output
+    player2 win
+
+```
+
+### 5.
+```
+input
+    player1: ["4H", "4D"]
+    player2: ["4C", "4S"]
+
+output
+    peace
+
+```
