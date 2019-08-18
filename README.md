@@ -106,3 +106,13 @@ input
 output
     player2 win
 ```
+
+### 10.
+```
+input
+    player1: ["4H", "4D", "4S", "8C", "JD"]
+    player2: ["5C", "6S", "7D", "8H", "9C"]
+
+output
+    player2 win
+```

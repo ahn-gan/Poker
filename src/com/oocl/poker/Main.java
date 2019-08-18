@@ -1,6 +1,7 @@
 package com.oocl.poker;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 import static com.oocl.poker.Constants.*;
 import static java.util.stream.Collectors.toList;
@@ -127,6 +128,8 @@ public class Main {
             return DOUBLE_PAIR;
         } else if (isThreeOfAKind(pokersMap)) {
             return THREE_OF_A_KIND;
+        } else if (isStraight(pokersMap.entrySet().stream().map(v -> v.getKey()).collect(toList()))) {
+            return STRAIGHT;
         }
         return SINGLE;
     }
@@ -154,5 +157,22 @@ public class Main {
 
     private boolean isThreeOfAKind(Map<Integer, Integer> pokersMap) {
         return pokersMap.values().stream().filter(value -> value == 3).collect(toList()).size() > 0;
+    }
+
+
+    private boolean isStraight(List<Integer> keyList) {
+        Integer preKey = null;
+        for(int i = 0; i < keyList.size(); i++) {
+            if (i == 0) {
+                preKey = keyList.get(i);
+            } else {
+                if (keyList.get(i) == preKey + 1) {
+                    preKey = keyList.get(i);
+                }
+                else
+                    return false;
+            }
+        }
+        return true;
     }
 }

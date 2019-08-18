@@ -108,4 +108,14 @@ public class MainTest {
         // then
         Assert.assertEquals("player2 win", result);
     }
+
+    @Test
+    public void should_return_player2_win_when_his_pokers_has_straight_type_but_player1_has_3_of_a_kind() {
+        // given
+        List<String> pokers = Arrays.asList("4H", "4D", "4S", "8C", "JD", "5C", "6S", "7D", "8H", "9C");
+        // when
+        String result = new Main().playingPokers(pokers);
+        // then
+        Assert.assertEquals("player2 win", result);
+    }
 }

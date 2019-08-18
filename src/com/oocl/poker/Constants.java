@@ -11,6 +11,8 @@ public class Constants {
 
     public static final int THREE_OF_A_KIND = 4;
 
+    public static final int STRAIGHT = 5;
+
     // result type
     public static final int PLAYER1_WIN = -1;
 
