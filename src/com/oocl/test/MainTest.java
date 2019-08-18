@@ -59,27 +59,14 @@ public class MainTest {
         Assert.assertEquals("peace", result);
     }
 
-//    @Test
-//    public void should_player2_win_when_his_pokers_is_single_bigger_than_player1() {
-//        List<String> pokers = Arrays.asList("5H", "9D", "6C", "2D", "7S", "5C", "3H", "7D", "9C", "10H");
-//        String[] player2 = {"5C", "3H", "7D", "9C", "10H"};
+    @Test
+    public void should_return_player1_win_when_his_pokers_has_2_pairs_but_player2_has_1() {
+        // given
+        List<String> pokers = Arrays.asList("4H", "4D", "8S", "8C", "4C", "4S", "TC", "QH");
+        // when
+        String result = new Main().playingPokers(pokers);
+        // then
+        Assert.assertEquals("player1 win", result);
+    }
 
-//        String result = new Poker().playingCards(pokers);
-
-//        Assert.assertEquals("player2 win", result);
-//    }
-
-
-//    public String playingCards(List<String> pokers) {
-////        String[] player1 = pokers
-//        List<String> player1 = sortAsc(pokers.subList(0, 4));
-//        List<String> player2 = sortAsc(pokers.subList(4, 9));
-////        int result = Compare();
-//        return "";
-//    }
-//
-//    protected List<String> sortAsc(List<String> input) {
-//
-//        return input.stream().sorted().collect(Collectors.toList());
-//    }
 }

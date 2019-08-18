@@ -7,6 +7,8 @@ public class Constants {
 
     public static final int PAIR = 2;
 
+    public static final int DOUBLE_PAIR = 3;
+
     // result type
     public static final int PLAYER1_WIN = -1;
 

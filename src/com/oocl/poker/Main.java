@@ -14,32 +14,44 @@ public class Main {
         int pokerType1 = getPokersType(player1);
         List<Poker> player2 = sortPokers(pokers.subList(pokers.size() / 2, pokers.size()));
         int pokerType2 = getPokersType(player2);
-        if (pokerType1 == PAIR && pokerType2 == SINGLE) {
+        if (pokerType1 > pokerType2) {
             result = buildResult(PLAYER1_WIN);
-        } else if (pokerType1 == SINGLE && pokerType2 == PAIR) {
-            result = buildResult(PLAYER2_WIN);
-        } else if (pokerType1 == PAIR && pokerType2 == PAIR) {
-            result = buildResult(comparePair(player1, player2));
-        } else {
-            // both single
-            if (player1.get(player1.size() - 1).getValue() < player2.get(player1.size() - 1).getValue()) {
-                result = buildResult(PLAYER2_WIN);
-            } else if (player1.get(player1.size() - 1).getValue().equals(player2.get(player1.size() - 1).getValue())) {
-                result = buildResult(PEACE);
-            } else {
-                result = buildResult(PLAYER1_WIN);
+        } else if (pokerType1 == pokerType2){
+            switch (pokerType1) {
+                case PAIR:
+                    result = buildResult(comparePair(player1, player2));
+                    break;
+                default:
+                    result = buildResult(compareSingle(player1, player2));
             }
+        } else {
+            result = buildResult(PLAYER2_WIN);
         }
         return result;
     }
 
     private int comparePair(List<Poker> player1, List<Poker> player2) {
-        if (player1.get(0).getValue() < player2.get(0).getValue())
+        if (player1.get(0).getValue() > player2.get(0).getValue())
             return -1;
         else if (player1.get(0).getValue().equals(player2.get(0).getValue()))
             return 0;
         else
             return 1;
+    }
+
+    private int compareSingle(List<Poker> player1, List<Poker> player2) {
+        Integer maxPokerValue1 = player1.get(player1.size() - 1).getValue();
+        Integer maxPokerValue2 = player2.get(player1.size() - 1).getValue();
+        if (maxPokerValue1 > maxPokerValue2) {
+            return -1;
+        } else if (maxPokerValue1.equals(maxPokerValue2)) {
+            if (player1.size() == 1 && player2.size() == 1)
+                return 0;
+            else
+                return compareSingle(player1.subList(0, player1.size() - 1), player2.subList(0, player2.size() - 1));
+        } else {
+            return 1;
+        }
     }
 
     private List<Poker> parsePokers(List<String> givenPokers) {
@@ -77,9 +89,10 @@ public class Main {
 
     private int getPokersType(List<Poker> pokes) {
         Map<Integer, Integer> pokersMap = getPokersMap(pokes);
-        int maxSamePokerValue = pokersMap.values().stream().mapToInt(v -> v).max().getAsInt();
-        if (maxSamePokerValue == 2) {
+        if (isOnePair(pokersMap)) {
             return PAIR;
+        } else if (isDoublePairs(pokersMap)) {
+            return DOUBLE_PAIR;
         }
         return SINGLE;
     }
@@ -95,5 +108,13 @@ public class Main {
 
     private String buildResult(int result) {
         return result == PLAYER1_WIN ? "player1 win" : (result == PEACE ? "peace" : "player2 win");
+    }
+
+    private boolean isOnePair(Map<Integer, Integer> pokersMap) {
+        return pokersMap.values().stream().filter(value -> value == 2).collect(toList()).size() == 1;
+    }
+
+    private boolean isDoublePairs(Map<Integer, Integer> pokersMap) {
+        return pokersMap.values().stream().filter(value -> value == 2).collect(toList()).size() == 2;
     }
 }

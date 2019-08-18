@@ -56,3 +56,13 @@ output
     peace
 
 ```
+
+### 6.
+```
+input
+    player1: ["4H", "4D", "8S", "8C"]
+    player2: ["4C", "4S", "TC", "QH"]
+
+output
+    player1 win
+```
