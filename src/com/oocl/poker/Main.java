@@ -36,6 +36,9 @@ public class Main {
                 case FULL_HOUSE:
                     result = buildResult(compareFullHouse(pokersMap1, pokersMap2));
                     break;
+                case FOUR_OF_A_KIND:
+                    result = buildResult(compareFour(pokersMap1, pokersMap2));
+                    break;
                 case FLUSH:
                 default:
                     result = buildResult(compareSingle(player1, player2));
@@ -52,21 +55,27 @@ public class Main {
     }
 
     private int comparePair(Map<Integer, Integer> player1, Map<Integer, Integer> player2) {
-        List<Integer> player1PairsKeys = getPairsKeyFromMap(player1, 2);
-        List<Integer> player2PairsKeys = getPairsKeyFromMap(player2, 2);
+        List<Integer> player1PairsKeys = getKeysKeyFromMapByValue(player1, 2);
+        List<Integer> player2PairsKeys = getKeysKeyFromMapByValue(player2, 2);
         int pairsCompareResult = compareList(player1PairsKeys, player2PairsKeys);
         if (pairsCompareResult == 0 && player1.values().contains(1)) {
-            List<Integer> player1SingleKeys = getPairsKeyFromMap(player1, 1);
-            List<Integer> player2SingleKeys = getPairsKeyFromMap(player2, 1);
+            List<Integer> player1SingleKeys = getKeysKeyFromMapByValue(player1, 1);
+            List<Integer> player2SingleKeys = getKeysKeyFromMapByValue(player2, 1);
             return compareList(player1SingleKeys, player2SingleKeys);
         } else
             return pairsCompareResult;
     }
 
     private int compareThree(Map<Integer, Integer> pokersMap1, Map<Integer, Integer> pokersMap2) {
-        List<Integer> player1PairsKeys = getPairsKeyFromMap(pokersMap1, 3);
-        List<Integer> player2PairsKeys = getPairsKeyFromMap(pokersMap2, 3);
+        List<Integer> player1PairsKeys = getKeysKeyFromMapByValue(pokersMap1, 3);
+        List<Integer> player2PairsKeys = getKeysKeyFromMapByValue(pokersMap2, 3);
         return compareList(player1PairsKeys, player2PairsKeys);
+    }
+
+    private int compareFour(Map<Integer, Integer> pokersMap1, Map<Integer, Integer> pokersMap2) {
+        List<Integer> player1CompareKeys = getKeysKeyFromMapByValue(pokersMap1, 4);
+        List<Integer> player2CompareKeys = getKeysKeyFromMapByValue(pokersMap2, 4);
+        return compareList(player1CompareKeys, player2CompareKeys);
     }
 
     private int compareStraight(List<Poker> player1, List<Poker> player2) {
@@ -87,7 +96,7 @@ public class Main {
             return 1;
     }
 
-    private List<Integer> getPairsKeyFromMap(Map<Integer, Integer> map, Integer value) {
+    private List<Integer> getKeysKeyFromMapByValue(Map<Integer, Integer> map, Integer value) {
         List<Integer> keyList = new ArrayList<>();
         for (Map.Entry<Integer, Integer> entry : map.entrySet()) {
             if (entry.getValue().equals(value)) {
