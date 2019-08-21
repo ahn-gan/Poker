@@ -17,6 +17,8 @@ public class Constants {
 
     public static final int FULL_HOUSE = 7;
 
+    public static final int FOUR_OF_A_KIND = 8;
+
     // result type
     public static final int PLAYER1_WIN = -1;
 

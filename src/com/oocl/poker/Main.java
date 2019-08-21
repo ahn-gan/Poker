@@ -149,6 +149,8 @@ public class Main {
             return STRAIGHT;
         } else if (isFlush(originPokers.stream().map(Poker::getCategory).collect(toList()))) {
             return FLUSH;
+        } else if (isFourOfAKind(pokersMap)) {
+            return FOUR_OF_A_KIND;
         }
             return SINGLE;
     }
@@ -204,5 +206,9 @@ public class Main {
 
     private boolean isFullHouse(Map<Integer, Integer> pokersMap) {
         return isOnePair(pokersMap) && isThreeOfAKind(pokersMap);
+    }
+
+    private boolean isFourOfAKind(Map<Integer, Integer> pokersMap) {
+        return pokersMap.values().stream().filter(value -> value == 4).collect(toList()).size() > 0;
     }
 }
