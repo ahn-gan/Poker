@@ -15,6 +15,8 @@ public class Constants {
 
     public static final int FLUSH = 6;
 
+    public static final int FULL_HOUSE = 7;
+
     // result type
     public static final int PLAYER1_WIN = -1;
 

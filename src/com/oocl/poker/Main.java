@@ -129,7 +129,9 @@ public class Main {
     }
 
     private int getPokersType(Map<Integer, Integer> pokersMap, List<Poker> originPokers) {
-        if (isOnePair(pokersMap)) {
+        if (isFullHouse(pokersMap)) {
+            return FULL_HOUSE;
+        } else if (isOnePair(pokersMap)) {
             return PAIR;
         } else if (isDoublePairs(pokersMap)) {
             return DOUBLE_PAIR;
@@ -190,5 +192,9 @@ public class Main {
             categoryMap.put(v, count);
         });
         return categoryMap.keySet().size() == 1;
+    }
+
+    private boolean isFullHouse(Map<Integer, Integer> pokersMap) {
+        return isOnePair(pokersMap) && isThreeOfAKind(pokersMap);
     }
 }

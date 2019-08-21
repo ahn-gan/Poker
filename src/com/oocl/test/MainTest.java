@@ -148,4 +148,14 @@ public class MainTest {
         // then
         Assert.assertEquals("player1 win", result);
     }
+
+    @Test
+    public void should_return_player1_win_when_he_has_full_house_but_player2_has_both_flush() {
+        // given
+        List<String> pokers = Arrays.asList("2C", "2H", "2S", "JC", "JD", "5S", "TS", "AS", "3S", "9S");
+        // when
+        String result = new Main().playingPokers(pokers);
+        // then
+        Assert.assertEquals("player1 win", result);
+    }
 }
