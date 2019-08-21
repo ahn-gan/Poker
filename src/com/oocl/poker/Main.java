@@ -33,6 +33,9 @@ public class Main {
                 case STRAIGHT:
                     result = buildResult(compareStraight(player1, player2));
                     break;
+                case FULL_HOUSE:
+                    result = buildResult(compareFullHouse(pokersMap1, pokersMap2));
+                    break;
                 case FLUSH:
                 default:
                     result = buildResult(compareSingle(player1, player2));
@@ -41,6 +44,11 @@ public class Main {
             result = buildResult(PLAYER2_WIN);
         }
         return result;
+    }
+
+    private int compareFullHouse(Map<Integer, Integer> pokersMap1, Map<Integer, Integer> pokersMap2) {
+        int result = compareThree(pokersMap1, pokersMap2);
+        return result == PEACE ? comparePair(pokersMap1, pokersMap2) : result;
     }
 
     private int comparePair(Map<Integer, Integer> player1, Map<Integer, Integer> player2) {

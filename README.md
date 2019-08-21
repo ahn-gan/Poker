@@ -164,7 +164,7 @@ output
     player1 win
 ```
 
-### 14.
+### 15.
 ```
 // full house
 input
@@ -175,7 +175,7 @@ output
     player2 win
 ```
 
-### 15.
+### 16.
 ```
 // four of a kind
 input
@@ -186,7 +186,7 @@ output
     player1 win
 ```
 
-### 15.
+### 17.
 ```
 // four of a kind
 input
@@ -197,7 +197,7 @@ output
     player2 win
 ```
 
-### 16.
+### 18.
 ```
 // straight flush
 input
@@ -208,7 +208,7 @@ output
     player1 win
 ```
 
-### 17.
+### 19.
 ```
 // straight flush
 input
@@ -219,7 +219,7 @@ output
     player2 win
 ```
 
-### 18.
+### 20.
 ```
 // straight flush
 input
