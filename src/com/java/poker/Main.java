@@ -1,8 +1,8 @@
-package com.oocl.poker;
+package com.java.poker;
 
 import java.util.*;
 
-import static com.oocl.poker.Constants.*;
+import static com.java.poker.Constants.*;
 import static java.util.stream.Collectors.toList;
 
 public class Main {

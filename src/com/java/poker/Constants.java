@@ -1,4 +1,4 @@
-package com.oocl.poker;
+package com.java.poker;
 
 public class Constants {
 

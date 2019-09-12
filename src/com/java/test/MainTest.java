@@ -1,6 +1,6 @@
-package com.oocl.test;
+package com.java.test;
 
-import com.oocl.poker.Main;
+import com.java.poker.Main;
 import org.junit.Assert;
 import org.junit.Test;
 
